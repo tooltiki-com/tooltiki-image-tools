@@ -1,0 +1,83 @@
+{
+  "name": "@tooltiki/image-tools",
+  "version": "0.1.0",
+  "description": "Zero-dependency image maths for Node: read dimensions, format, DPI and EXIF orientation straight from the bytes, compute fits and crops, build srcsets, and size images for print.",
+  "keywords": [
+    "image",
+    "image-size",
+    "dimensions",
+    "probe",
+    "metadata",
+    "exif",
+    "orientation",
+    "resize",
+    "aspect-ratio",
+    "crop",
+    "srcset",
+    "responsive-images",
+    "dpi",
+    "ppi",
+    "print",
+    "png",
+    "jpeg",
+    "webp",
+    "avif",
+    "heic",
+    "gif",
+    "svg",
+    "zero-dependency"
+  ],
+  "license": "MIT",
+  "author": "TecWeb B.V. (https://tooltiki.com)",
+  "homepage": "https://github.com/tooltiki/image-tools#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tooltiki/image-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tooltiki/image-tools/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./node": {
+      "types": "./dist/esm/node.d.ts",
+      "import": "./dist/esm/node.js",
+      "require": "./dist/cjs/node.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && node scripts/post-build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test",
+    "test:fast": "node --test",
+    "prepublishOnly": "npm run typecheck && npm run test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

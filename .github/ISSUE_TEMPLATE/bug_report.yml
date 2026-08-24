@@ -1,0 +1,53 @@
+name: Bug report
+description: Something returns the wrong answer
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The most valuable report is a file that reads back the wrong
+        dimensions. If you have one, attach it — under 10 KB it can go
+        straight in as a test fixture.
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime
+      description: Node, Bun, Deno, a browser, an edge runtime — and which version.
+      placeholder: Node 22.11 on macOS
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you called, what came back, and what you expected instead.
+      placeholder: |
+        probeImage(bytes) returned { width: 512, height: 384 }
+        The file is 384 x 512 — it is a portrait photo with EXIF orientation 6.
+    validations:
+      required: true
+
+  - type: textarea
+    id: how
+    attributes:
+      label: How to reproduce
+      description: A short snippet, and the file if you can share it.
+      render: js
+
+  - type: textarea
+    id: file
+    attributes:
+      label: The file
+      description: >
+        Attach it, or say how to produce an equivalent — a camera model, an
+        encoder and its flags, or a command such as `cwebp -lossless in.png`.

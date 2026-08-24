@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The oldest version package.json claims to support, through current.
+        node: ['18', '20', '22', '24']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm run test:fast
+
+  package:
+    name: Package contents
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      # A published tarball that is missing a file, or carrying the fixtures,
+      # is a mistake nobody notices until someone installs it.
+      - name: Show what would be published
+        run: npm pack --dry-run
+
+      - name: Both entry points resolve, in both module systems
+        run: |
+          npm pack --pack-destination /tmp
+          mkdir -p /tmp/consumer && cd /tmp/consumer
+          npm init -y > /dev/null
+          npm install /tmp/tooltiki-image-tools-*.tgz
+          node --input-type=module -e "
+            import { probeImage, fit } from '@tooltiki/image-tools';
+            import { probeImageFileSync } from '@tooltiki/image-tools/node';
+            if (fit({ width: 4000, height: 3000 }, { width: 1200 }).height !== 900) process.exit(1);
+            if (typeof probeImage !== 'function' || typeof probeImageFileSync !== 'function') process.exit(1);
+            console.log('ESM ok');
+          "
+          node -e "
+            const { fit } = require('@tooltiki/image-tools');
+            const { probeImageFileSync } = require('@tooltiki/image-tools/node');
+            if (fit({ width: 4000, height: 3000 }, { width: 1200 }).height !== 900) process.exit(1);
+            if (typeof probeImageFileSync !== 'function') process.exit(1);
+            console.log('CommonJS ok');
+          "

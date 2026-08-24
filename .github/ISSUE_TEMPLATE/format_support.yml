@@ -1,0 +1,33 @@
+name: Format support
+description: Ask for a format this cannot read yet
+labels: [enhancement, format]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        JPEG XL, PSD and RAW are the known gaps. Anything whose dimensions sit
+        in a header is in scope; anything that needs a decoder is not.
+
+  - type: input
+    id: format
+    attributes:
+      label: Format
+      placeholder: JPEG XL
+    validations:
+      required: true
+
+  - type: textarea
+    id: spec
+    attributes:
+      label: Where the header is specified
+      description: A link to the spec section, or to a reference implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: sample
+    attributes:
+      label: A sample file
+      description: >
+        Small, freely licensed, and with dimensions you can state
+        independently. This becomes the test fixture.
