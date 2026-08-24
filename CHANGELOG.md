@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-08-25
+
+### Changed
+
+- `homepage` now points at <https://tooltiki.com/en/open-source>, which is
+  where the libraries are actually explained, rather than back at the README
+  npm is already displaying. The repository and issue links are unchanged.
+
 ## [0.1.0] — 2026-08-24
 
 First release.
@@ -40,5 +48,6 @@ First release.
 - **`tooltiki-image-tools/node`** — `probeImageFile` and friends, kept in a
   separate entry point so a browser bundle never pulls `node:fs` in.
 
-[Unreleased]: https://github.com/tooltiki-com/tooltiki-image-tools/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/tooltiki-com/tooltiki-image-tools/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/tooltiki-com/tooltiki-image-tools/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/tooltiki-com/tooltiki-image-tools/releases/tag/v0.1.0

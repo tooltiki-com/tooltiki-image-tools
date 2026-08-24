@@ -1,6 +1,6 @@
 {
   "name": "tooltiki-image-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Zero-dependency image maths for Node: read dimensions, format, DPI and EXIF orientation straight from the bytes, compute fits and crops, build srcsets, and size images for print.",
   "keywords": [
     "image",
@@ -29,7 +29,7 @@
   ],
   "license": "MIT",
   "author": "TecWeb B.V. (https://tooltiki.com)",
-  "homepage": "https://github.com/tooltiki-com/tooltiki-image-tools#readme",
+  "homepage": "https://tooltiki.com/en/open-source",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tooltiki-com/tooltiki-image-tools.git"
