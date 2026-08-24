@@ -7,8 +7,8 @@
  * the pixels — resaving a photo "at 300 dpi" changes nothing about the picture.
  * What decides the answer is the pixel count against the physical size.
  */
-import { largestPrintAt, PAPER_SIZES, fitsPaper, megapixels } from '@tooltiki/image-tools';
-import { probeImageFile } from '@tooltiki/image-tools/node';
+import { largestPrintAt, PAPER_SIZES, fitsPaper, megapixels } from 'tooltiki-image-tools';
+import { probeImageFile } from 'tooltiki-image-tools/node';
 
 const inches = (value) => `${value.toFixed(1)} in`;
 

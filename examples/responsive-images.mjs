@@ -7,8 +7,8 @@
  * sharp (or an image CDN) and the two attributes that decide which one a
  * browser actually downloads.
  */
-import { buildSizes, buildSrcset, estimateEncodedSize, formatBytes, renditions } from '@tooltiki/image-tools';
-import { probeImageFile } from '@tooltiki/image-tools/node';
+import { buildSizes, buildSrcset, estimateEncodedSize, formatBytes, renditions } from 'tooltiki-image-tools';
+import { probeImageFile } from 'tooltiki-image-tools/node';
 
 const LAYOUT = [
     { media: '(min-width: 1100px)', size: '1040px' },

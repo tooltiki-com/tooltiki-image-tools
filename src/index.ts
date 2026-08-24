@@ -1,5 +1,5 @@
 /**
- * @tooltiki/image-tools
+ * tooltiki-image-tools
  *
  * Image maths with no dependencies and no decoder: read what a file says about
  * itself, work out what it becomes when you resize it, and size it for a
@@ -7,7 +7,7 @@
  *
  * The main entry point is runtime-agnostic — it touches no Node built-in, so
  * it runs unchanged in a browser, a worker or an edge function. The file
- * helpers live in `@tooltiki/image-tools/node`.
+ * helpers live in `tooltiki-image-tools/node`.
  *
  * Interactive versions of most of this: https://tooltiki.com
  */

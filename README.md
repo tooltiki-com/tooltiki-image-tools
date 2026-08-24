@@ -1,9 +1,9 @@
-# @tooltiki/image-tools
+# tooltiki-image-tools
 
-[![npm](https://img.shields.io/npm/v/@tooltiki/image-tools.svg)](https://www.npmjs.com/package/@tooltiki/image-tools)
-[![CI](https://github.com/tooltiki/image-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/tooltiki/image-tools/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/tooltiki-image-tools.svg)](https://www.npmjs.com/package/tooltiki-image-tools)
+[![CI](https://github.com/tooltiki-com/tooltiki-image-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/tooltiki-com/tooltiki-image-tools/actions/workflows/ci.yml)
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](./package.json)
-[![licence](https://img.shields.io/npm/l/@tooltiki/image-tools.svg)](./LICENSE)
+[![licence](https://img.shields.io/npm/l/tooltiki-image-tools.svg)](./LICENSE)
 
 **Everything you can work out about an image without decoding it.**
 
@@ -16,11 +16,11 @@ Node built-in, so the same code runs in a browser, a worker, an edge function
 or a Lambda.
 
 ```bash
-npm install @tooltiki/image-tools
+npm install tooltiki-image-tools
 ```
 
 ```js
-import { probeImage, fit, printQuality, effectiveDpi } from '@tooltiki/image-tools';
+import { probeImage, fit, printQuality, effectiveDpi } from 'tooltiki-image-tools';
 
 const info = probeImage(bytes);
 // { format: 'jpeg', width: 4032, height: 3024, orientation: 6,
@@ -57,8 +57,8 @@ This library is the boring, tested answer to all three.
 ## Reading a file
 
 ```js
-import { probeImage, tryProbeImage, imageSize, detectFormat } from '@tooltiki/image-tools';
-import { probeImageFile } from '@tooltiki/image-tools/node';
+import { probeImage, tryProbeImage, imageSize, detectFormat } from 'tooltiki-image-tools';
+import { probeImageFile } from 'tooltiki-image-tools/node';
 
 probeImage(bytes);      // throws ImageParseError on anything unreadable
 tryProbeImage(bytes);   // returns null instead
@@ -103,7 +103,7 @@ Not supported: JPEG XL, PSD, RAW. Contributions welcome.
 ### Orientation, properly
 
 ```js
-import { orientationTransform, applyOrientation } from '@tooltiki/image-tools';
+import { orientationTransform, applyOrientation } from 'tooltiki-image-tools';
 
 const photo = probeImage(bytes);
 // { width: 4032, height: 3024, orientation: 6, displayWidth: 3024, displayHeight: 4032 }
@@ -140,7 +140,7 @@ probeImage(heicBytes);
 ## Resize maths
 
 ```js
-import { fit, cropBox, containBox, clampSize } from '@tooltiki/image-tools';
+import { fit, cropBox, containBox, clampSize } from 'tooltiki-image-tools';
 
 const source = { width: 4000, height: 3000 };
 
@@ -192,7 +192,7 @@ containBox(source, { width: 1000, height: 1000 });
 And the guard worth having before you decode anything:
 
 ```js
-import { decodedByteSize } from '@tooltiki/image-tools';
+import { decodedByteSize } from 'tooltiki-image-tools';
 
 const { width, height } = probeImage(upload);
 if (decodedByteSize({ width, height }) > 256 * 1024 * 1024) {
@@ -207,7 +207,7 @@ Interactive version: [tooltiki.com/en/image-resizer](https://tooltiki.com/en/ima
 ## Aspect ratios
 
 ```js
-import { aspectRatio, nearestNamedRatio, parseRatio, heightForRatio } from '@tooltiki/image-tools';
+import { aspectRatio, nearestNamedRatio, parseRatio, heightForRatio } from 'tooltiki-image-tools';
 
 aspectRatio(1920, 1080).label;              // '16:9'
 aspectRatio(1998, 1080).label;              // '37:20'
@@ -232,7 +232,7 @@ Interactive version: [tooltiki.com/en/resolution-calculator](https://tooltiki.co
 ## Formats and conversions
 
 ```js
-import { IMAGE_FORMATS, formatFromMime, replaceExtension, losesDataConvertingTo } from '@tooltiki/image-tools';
+import { IMAGE_FORMATS, formatFromMime, replaceExtension, losesDataConvertingTo } from 'tooltiki-image-tools';
 
 formatFromMime('image/jpg');            // 'jpeg' — tolerates the wrong-but-common spellings
 replaceExtension('holiday.HEIC', 'jpeg');  // 'holiday.jpg'
@@ -259,7 +259,7 @@ Interactive versions:
 ## File size
 
 ```js
-import { formatBytes, parseBytes, savingPercent, estimateEncodedSize } from '@tooltiki/image-tools';
+import { formatBytes, parseBytes, savingPercent, estimateEncodedSize } from 'tooltiki-image-tools';
 
 formatBytes(2_500_000);                    // '2.5 MB'
 formatBytes(1_048_576, { binary: true });  // '1.0 MiB'
@@ -293,7 +293,7 @@ per inch only exist once you decide how big to print it. Everything here treats
 resolution as the relationship between a pixel count and a physical size.
 
 ```js
-import { printSize, pixelsForPrint, fitsPaper, screenPpi, screenDimensions } from '@tooltiki/image-tools';
+import { printSize, pixelsForPrint, fitsPaper, screenPpi, screenDimensions } from 'tooltiki-image-tools';
 
 printSize({ width: 3000, height: 2000 }, 300);       // 10 x 6.67 in
 pixelsForPrint({ width: 8, height: 10, unit: 'in' }, 300);   // 2400 x 3000
@@ -320,7 +320,7 @@ Interactive versions:
 ## Responsive images
 
 ```js
-import { srcsetWidths, buildSrcset, buildSizes, renditions } from '@tooltiki/image-tools';
+import { srcsetWidths, buildSrcset, buildSizes, renditions } from 'tooltiki-image-tools';
 
 srcsetWidths({ sourceWidth: 1500 });
 // [320, 480, 640, 768, 1024, 1280, 1500]   <- never larger than the source
@@ -353,7 +353,7 @@ buildSrcset((w, h) => `/cdn/${w}x${h}/hero.jpg`, [400, 800], { source: { width: 
 ## Platform presets
 
 ```js
-import { findPreset, presetsFor, PRESETS_LAST_REVIEWED } from '@tooltiki/image-tools';
+import { findPreset, presetsFor, PRESETS_LAST_REVIEWED } from 'tooltiki-image-tools';
 
 findPreset('open-graph');       // { width: 1200, height: 630, ratio: '40:21', ... }
 presetsFor('Instagram');        // square, portrait, landscape, story, profile
@@ -385,12 +385,12 @@ answer sizing questions and stops: no camera model, no GPS, no MakerNotes.
 Node 18 and up. Ships ESM and CommonJS with TypeScript declarations for both:
 
 ```js
-import { probeImage } from '@tooltiki/image-tools';        // ESM
-const { probeImage } = require('@tooltiki/image-tools');   // CommonJS
+import { probeImage } from 'tooltiki-image-tools';        // ESM
+const { probeImage } = require('tooltiki-image-tools');   // CommonJS
 ```
 
 The main entry point imports nothing from Node, so it works unchanged in
-browsers, workers, Deno, Bun and edge runtimes. `@tooltiki/image-tools/node`
+browsers, workers, Deno, Bun and edge runtimes. `tooltiki-image-tools/node`
 is the only part that touches `node:fs`, and it is a separate entry point
 precisely so a browser bundle never pulls it in.
 

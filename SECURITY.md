@@ -23,7 +23,7 @@ remains is worth taking seriously.
 
 Report privately, not as a public issue:
 
-- GitHub's [private vulnerability reporting](https://github.com/tooltiki/image-tools/security/advisories/new), or
+- GitHub's [private vulnerability reporting](https://github.com/tooltiki-com/tooltiki-image-tools/security/advisories/new), or
 - **info@tooltiki.com**, with "security" in the subject
 
 Please include the file that triggers it, or the bytes to reconstruct one, and

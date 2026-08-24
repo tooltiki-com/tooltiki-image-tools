@@ -8,8 +8,8 @@
  * that is 40 KB on disk and 800 MB in memory — which is the whole point of
  * doing this before the decoder runs, not after.
  */
-import { decodedByteSize, formatBytes, megapixels } from '@tooltiki/image-tools';
-import { probeImageFile } from '@tooltiki/image-tools/node';
+import { decodedByteSize, formatBytes, megapixels } from 'tooltiki-image-tools';
+import { probeImageFile } from 'tooltiki-image-tools/node';
 
 const ALLOWED = new Set(['jpeg', 'png', 'webp', 'avif']);
 const MAX_PIXELS = 50_000_000;

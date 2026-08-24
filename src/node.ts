@@ -2,7 +2,7 @@
  * File helpers, kept apart from the main entry point so that importing this
  * package into a browser bundle never drags `node:fs` in behind it.
  *
- * Import from `@tooltiki/image-tools/node`.
+ * Import from `tooltiki-image-tools/node`.
  */
 import { closeSync, openSync, readSync, statSync } from 'node:fs';
 import { open, stat } from 'node:fs/promises';

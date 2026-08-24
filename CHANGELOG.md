@@ -37,8 +37,8 @@ First release.
   image attributes, generated.
 - **`PRESETS`** — the sizes the major platforms enforce, dated with
   `PRESETS_LAST_REVIEWED` because they expire.
-- **`@tooltiki/image-tools/node`** — `probeImageFile` and friends, kept in a
+- **`tooltiki-image-tools/node`** — `probeImageFile` and friends, kept in a
   separate entry point so a browser bundle never pulls `node:fs` in.
 
-[Unreleased]: https://github.com/tooltiki/image-tools/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/tooltiki/image-tools/releases/tag/v0.1.0
+[Unreleased]: https://github.com/tooltiki-com/tooltiki-image-tools/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/tooltiki-com/tooltiki-image-tools/releases/tag/v0.1.0
