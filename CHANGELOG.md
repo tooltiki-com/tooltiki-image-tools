@@ -6,6 +6,30 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] — 2026-08-25
+
+Three bugs found by fuzzing, each of which returned a confident wrong answer
+rather than failing. All three now have regression tests.
+
+### Fixed
+
+- **`formatBytes` printed units that do not exist.** The unit was chosen before
+  rounding, so 999.6 stayed in bytes and then rounded to `1,000 B` — a
+  magnitude the decimal scheme has no name for. Same one rung up: 999,950
+  printed as `1,000.0 KB` instead of `1.0 MB`.
+- **`srcsetWidths` returned widths above the `max` it was given.** With a `min`
+  above the ceiling the geometric branch spaced its steps from the ceiling *up*
+  to the floor, so `{ count: 4, min: 2000, max: 400 }` produced
+  `[400, 684, 1170, 2000]`. Contradictory bounds now return an empty list.
+- **`fitsPaper` reported an impossible print as excellent.** A margin wider than
+  the sheet was clamped to a 1mm printable area, so a 200mm margin on A4 came
+  back as 50,800 dpi. It now returns `null`, as it already did for an unknown
+  paper size.
+- **`approximateRatio` reported extreme ratios as square.** No convergent fits
+  inside `maxTerm` beyond 1:maxTerm, and the fallback returned `1:1` — so a
+  1,000,000:1 sliver was labelled a square. It now pins the larger term at the
+  ceiling and returns `1000:1`.
+
 ## [0.1.1] — 2026-08-25
 
 ### Changed
@@ -48,6 +72,7 @@ First release.
 - **`tooltiki-image-tools/node`** — `probeImageFile` and friends, kept in a
   separate entry point so a browser bundle never pulls `node:fs` in.
 
-[Unreleased]: https://github.com/tooltiki-com/tooltiki-image-tools/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/tooltiki-com/tooltiki-image-tools/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/tooltiki-com/tooltiki-image-tools/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/tooltiki-com/tooltiki-image-tools/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/tooltiki-com/tooltiki-image-tools/releases/tag/v0.1.0

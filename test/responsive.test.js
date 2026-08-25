@@ -87,3 +87,17 @@ test('renditions keeps the aspect ratio at every rung', () => {
     ]);
     for (const size of sizes) assert.equal(size.width / size.height, 2);
 });
+
+test('contradictory bounds produce nothing, not widths above the max', () => {
+    // Regression. The geometric branch spaced its steps from the ceiling up to
+    // the floor, so asking for widths under 400 with a floor of 2000 returned
+    // [400, 684, 1170, 2000] — three of them above the max that was requested.
+    assert.deepEqual(srcsetWidths({ count: 4, min: 2000, max: 400 }), []);
+    assert.deepEqual(srcsetWidths({ min: 2000, max: 400 }), []);
+    assert.deepEqual(srcsetWidths({ min: 2000, sourceWidth: 800 }), []);
+    // Nothing a caller asks for may exceed the ceiling they set.
+    for (const max of [300, 700, 1500, 4000]) {
+        for (const width of srcsetWidths({ max, count: 5, min: 200 })) assert.ok(width <= max, `${width} > ${max}`);
+        for (const width of srcsetWidths({ max })) assert.ok(width <= max, `${width} > ${max}`);
+    }
+});

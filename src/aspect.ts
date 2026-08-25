@@ -90,7 +90,17 @@ export function approximateRatio(value: number, maxTerm = 1000): Ratio {
         if (remainder < 1e-9) break;
         x = 1 / remainder;
     }
-    if (numerator < 1 || denominator < 1) return { w: 1, h: 1, value, label: '1:1' };
+    // No convergent fits inside maxTerm, which happens for ratios more extreme
+    // than 1:maxTerm. Falling back to 1:1 would report a square, so pin the
+    // larger term at the ceiling and let the other round — an extreme ratio
+    // comes back extreme rather than wrong.
+    if (numerator < 1 || denominator < 1) {
+        const [w, h] =
+            value >= 1
+                ? [maxTerm, Math.max(1, Math.round(maxTerm / value))]
+                : [Math.max(1, Math.round(maxTerm * value)), maxTerm];
+        return { w, h, value, label: `${w}:${h}` };
+    }
     const reduced = makeRatio(numerator, denominator);
     return { w: reduced.w, h: reduced.h, value, label: reduced.label };
 }

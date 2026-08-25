@@ -1,6 +1,6 @@
 {
   "name": "tooltiki-image-tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Zero-dependency image maths for Node: read dimensions, format, DPI and EXIF orientation straight from the bytes, compute fits and crops, build srcsets, and size images for print.",
   "keywords": [
     "image",

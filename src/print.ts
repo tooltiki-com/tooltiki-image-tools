@@ -145,11 +145,15 @@ export function fitsPaper(pixels: Size, paperId: string, options: PaperFitOption
         ? { width: sheet.height, height: sheet.width, unit: 'mm' }
         : { width: sheet.width, height: sheet.height, unit: 'mm' };
 
-    const printable: PhysicalSize = {
-        width: Math.max(1, paper.width - margin * 2),
-        height: Math.max(1, paper.height - margin * 2),
-        unit: 'mm',
-    };
+    // Clamping a margin that swallows the sheet to 1mm would report a printable
+    // area that does not exist, and the resolution over it comes out in the
+    // tens of thousands of dpi and reads as "excellent". There is no print here
+    // to assess.
+    const printableWidth = paper.width - margin * 2;
+    const printableHeight = paper.height - margin * 2;
+    if (printableWidth <= 0 || printableHeight <= 0) return null;
+
+    const printable: PhysicalSize = { width: printableWidth, height: printableHeight, unit: 'mm' };
 
     // Filling the sheet without distortion means the tighter axis decides.
     const density = effectiveDpi(pixels, printable);

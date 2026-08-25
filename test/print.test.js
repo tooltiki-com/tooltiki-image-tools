@@ -131,3 +131,13 @@ test('a diagonal alone does not tell you how tall a screen is', () => {
     close(screenDimensions(27, '16:9', 'cm').width, 23.53 * 2.54, 0.01);
     assert.ok(screenArea(27, '16:9') > screenArea(24, '16:9'));
 });
+
+test('a margin that swallows the sheet has no print to assess', () => {
+    // Regression. The printable area was clamped to 1mm a side, so a 200mm
+    // margin on A4 reported 50,800 dpi and called it "excellent".
+    assert.equal(fitsPaper({ width: 2000, height: 3000 }, 'a4', { margin: 200 }), null);
+    assert.equal(fitsPaper({ width: 2000, height: 3000 }, 'a4', { margin: 105 }), null);
+    // Just inside is still a real answer.
+    const tight = fitsPaper({ width: 2000, height: 3000 }, 'a4', { margin: 100 });
+    assert.ok(tight && tight.dpi > 0 && Number.isFinite(tight.dpi));
+});

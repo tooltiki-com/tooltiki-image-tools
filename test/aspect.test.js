@@ -116,3 +116,17 @@ test('megapixels is the number a camera spec quotes', () => {
     assert.equal(megapixels({ width: 4032, height: 3024 }), 12.19);
     assert.equal(megapixels({ width: 1920, height: 1080 }), 2.07);
 });
+
+test('an extreme ratio comes back extreme, not square', () => {
+    // Regression. No continued-fraction convergent fits inside maxTerm for a
+    // ratio beyond 1:maxTerm, and the fallback returned 1:1 — reporting a
+    // panorama and a sliver as a square.
+    assert.equal(approximateRatio(1e6).label, '1000:1');
+    assert.equal(approximateRatio(1e-6).label, '1:1000');
+    assert.equal(approximateRatio(5000, 100).label, '100:1');
+    // The value is always preserved, whatever the printed terms.
+    assert.equal(approximateRatio(1e6).value, 1e6);
+    // And the ordinary cases are untouched.
+    assert.equal(approximateRatio(16 / 9).label, '16:9');
+    assert.equal(approximateRatio(1).label, '1:1');
+});

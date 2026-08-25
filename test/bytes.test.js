@@ -140,3 +140,26 @@ test('estimateBitsPerPixel is the number underneath', () => {
     assert.equal(estimate.bitsPerPixel, bpp);
     assert.ok(bpp > 0.5 && bpp < 4, `a photographic JPEG is around 1-3 bpp, got ${bpp}`);
 });
+
+test('rounding never invents a unit the scheme does not have', () => {
+    // Regression. The unit is picked before rounding, so 999.6 stayed in bytes
+    // and then rounded to 1000, printing "1,000 B" — a magnitude decimal units
+    // have no name for. The same happened one rung up at 999.95 KB.
+    assert.equal(formatBytes(999.4, EN), '999 B');
+    assert.equal(formatBytes(999.5, EN), '1.0 KB');
+    assert.equal(formatBytes(999.6, EN), '1.0 KB');
+    assert.equal(formatBytes(999_949, EN), '999.9 KB');
+    assert.equal(formatBytes(999_950, EN), '1.0 MB');
+    assert.equal(formatBytes(-999.6, EN), '-1.0 KB');
+    assert.equal(formatBytes(1023.6, { ...EN, binary: true }), '1.0 KiB');
+
+    // Nothing anywhere should print a mantissa that has reached the step.
+    for (let i = 0; i < 20_000; i++) {
+        const value = Math.random() * 10 ** (Math.random() * 15);
+        const text = formatBytes(value, EN);
+        assert.ok(!/^-?1,000(\.\d+)? /.test(text), `${value} formatted as ${text}`);
+    }
+
+    // The top unit has nowhere to be promoted to, and must still be sane.
+    assert.equal(formatBytes(1e15, EN), '1.0 PB');
+});

@@ -36,6 +36,11 @@ export function srcsetWidths(options: SrcsetWidthOptions = {}): number[] {
     const { min = 320, max, sourceWidth, count, widths = DEFAULT_WIDTHS } = options;
     const ceiling = Math.min(max ?? Infinity, sourceWidth ?? Infinity);
 
+    // Contradictory bounds have no answer. Without this the geometric branch
+    // below quietly spaces its steps from the ceiling *up* to the floor and
+    // hands back widths above the max that was asked for.
+    if (min > ceiling) return [];
+
     if (count && count > 0) {
         const top = Number.isFinite(ceiling) ? ceiling : (widths[widths.length - 1] as number);
         if (count === 1) return [Math.round(top)];

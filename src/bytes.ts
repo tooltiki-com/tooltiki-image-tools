@@ -38,6 +38,16 @@ export function formatBytes(bytes: number, options: FormatBytesOptions = {}): st
         value /= step;
         unit++;
     }
+
+    // The unit is chosen before rounding, and rounding can then push the value
+    // onto the next one: 999.6 bytes is "1.0 KB", not "1000 B", and 999.95 KB
+    // is "1.0 MB". Promote once more when that happens, or the output claims a
+    // magnitude the scheme has no unit for.
+    if (unit < units.length - 1 && Number(value.toFixed(unit === 0 ? 0 : digits)) >= step) {
+        value /= step;
+        unit++;
+    }
+
     const decimals = unit === 0 ? 0 : digits;
     const rounded = unit === 0 ? Math.round(value) : value;
     const text = rounded.toLocaleString(locale, {
